@@ -1,8 +1,8 @@
+from pydoc import render_doc
 from django.shortcuts import render
 
 # Create your views here.
 
-from django.shortcuts import render
 from django.http import HttpResponse
 
 def index1(request):
@@ -16,13 +16,18 @@ def main(request):
 
 from .models import Curriculum
 
+from django.shortcuts import render
+
 def show(request):
     curriculum = Curriculum.objects.all()
-    result = ''
-    for c in curriculum:
-        result += c.name + '<br>'
-    return HttpResponse(result)
-
+    # result = ''
+    # for c in curriculum:
+    #     result += c.name + '<br>'
+    # return HttpResponse(result)
+    return render(
+       request, 'show.html',
+        {'data': curriculum }
+    )
 
 def insert(request):
 # 1-linux 입력
