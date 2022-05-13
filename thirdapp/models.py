@@ -80,7 +80,7 @@ class Playground(models.Model):
 
 
 class Dept(models.Model):
-    deptno = models.ForeignKey(Deptno, on_delete=models.SET_NULL, null=True)
+    deptno = models.IntegerField()
     dname = models.CharField(max_length=14, null=True)
     loc = models.CharField(max_length=13, null=True)
     class Meta:

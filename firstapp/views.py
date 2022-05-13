@@ -3,6 +3,38 @@ from django.shortcuts import render
 
 # Create your views here.
 
+def req_get(request):
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET['c']
+    result = '%s %s %s' % (a, b, c)
+    return HttpResponse(result)
+def req_ajax4(request):
+        return render(request, 'firstapp/ajax4.html')
+
+
+
+
+
+
+
+def req_get(request):
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET['c']                # []는 값이 없으면 에러 / GET.get이 그래서 더 유용
+    result = '%s %s %s' % (a, b, c)
+    return HttpResponse(result)
+def req_post(request):
+    if request.method == 'POST':
+        a = request.POST.get('a')
+        b = request.POST.get('b')
+        c = request.POST['c']
+        result = '%s %s %s' % (a, b, c)
+        return HttpResponse(result)
+    return render(request, 'firstapp/post.html')
+
+
+
 from django.http import HttpResponse
 
 def index1(request):

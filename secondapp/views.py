@@ -3,6 +3,11 @@ from django.shortcuts import render
 
 from .models import Armyshop, Course
 
+def course(request):
+  return render(
+    request, 'secondapp/course.html', {}
+    )
+
 def insert(request):
     Course(name='데이터 분석', cnt=30).save()
     Course(name='데이터 수집', cnt=20).save()
@@ -29,10 +34,27 @@ def show(request):
     )
 
 
-def army_shop(request):
-    shops = Armyshop.objects.all()
+def army_shop2(request, year, month):
+    shops = Armyshop.objects.filter(year=year, month=month)
     
     return render(
      request, 'secondapp/army_shop.html',
      { 'data' : shops }
 )
+
+def army_shop(request):
+    # shops = Armyshop.objects.all()
+    # GET['prd'] 도 사용가능은 함
+    
+    prd = request.GET.get('prd')
+    if not prd: # prd에 값이 없을 경우
+        prd = ''
+
+    shops = Armyshop.objects.filter(name__contains=prd)
+
+    return render(
+     request, 'secondapp/army_shop.html',
+     { 'data' : shops }
+)
+
+
