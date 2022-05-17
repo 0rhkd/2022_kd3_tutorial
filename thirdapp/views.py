@@ -1,6 +1,35 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Owner, Shop, JejuOlle
+from .models import Hospital, Owner, Shop, JejuOlle
+
+from django.shortcuts import redirect
+from .forms import OwnerForm
+def owner(request):
+    if request.method == 'POST':
+
+        form = OwnerForm(request.POST)
+        if form.is_valid():
+            # commit False 사용 시 Curriculum 모델클래스로 반환
+            c = form.save(commit=False)
+            c.save()
+            return redirect('/third/owner/')
+    else:
+        form = OwnerForm()
+
+    return render(
+    request, 'thirdapp/owner.html',
+        { 'form': form }
+    )
+
+def hospital(request):
+
+   hospitals = Hospital.objects.all()
+
+   return render(
+    request,
+     'thirdapp/hospital.html', 
+     {'hospitals': hospitals}
+    )
 
 
 def owner(request):
@@ -12,8 +41,6 @@ def owner(request):
 
     return HttpResponse('주인 정보 등록 완료')
   return render(request, 'thirdapp/owner.html', {})
-
-
 
 
 def jeju_olle(request):

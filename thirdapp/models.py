@@ -4,6 +4,19 @@ from django.db import models
 from django.db.models.fields import CharField, IntegerField
 from django.forms import DateField, FloatField
 
+
+class Hospital(models.Model):
+    sido = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    medical = models.IntegerField(default=0)
+    room = models.IntegerField(default=0)
+    tel = models.CharField(max_length=15)
+    address = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'hospital'
+        managed = False
+
 class JejuOlle(models.Model):
     course = CharField(max_length=10)
     course_name = CharField(max_length=20)
@@ -27,13 +40,6 @@ class Shop(models.Model):
         app_label = 'thirdapp'
         managed = False
 
-
-
-
-
-
-
-
 class Owner(models.Model):
     name = models.CharField(max_length=50, null=True)
     class Meta:
@@ -45,12 +51,6 @@ class Animal(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.SET_NULL, null=True)
     class Meta:
       db_table = 'animal'
-
-
-
-
-
-
 
 
 class Warranty(models.Model):
@@ -75,27 +75,27 @@ class Playground(models.Model):
       db_table = 'playground'
 
 
-
-
-
-
 class Dept(models.Model):
-    deptno = models.IntegerField()
-    dname = models.CharField(max_length=14, null=True)
-    loc = models.CharField(max_length=13, null=True)
-    class Meta:
-        db_table = 'dept'
-
+  deptno = models.IntegerField(primary_key=True)
+  dname = models.CharField(max_length=14)
+  loc = models.CharField(max_length=13)
+  class Meta:
+    db_table = 'dept'
+    managed = False
 
 class Emp(models.Model):
-    empno = models.IntegerField(null=True)
-    ename = models.CharField(max_length=10, null=True)
-    job = models.CharField(max_length=9, null=True)
-    mgr = models.IntegerField(null=True)
-    hiredate = models.DateField()
-    sal = models.IntegerField(null=True)
-    comm = models.IntegerField(null=True)
-    deptno = models.IntegerField(null=True)
-    class Meta:
-        db_table = 'emp'
-
+  empno = models.IntegerField(primary_key=True)
+  ename = models.CharField(max_length=10)
+  job = models.CharField(max_length=9)
+  mgr = models.IntegerField(null=True)
+  hiredate = models.DateTimeField()
+  sal = models.IntegerField()
+  comm = models.IntegerField(null=True)
+  # deptno = models.IntegerField()
+  dept = models.ForeignKey(
+    Dept, 
+    on_delete=models.CASCADE, 
+    db_column='deptno')
+  class Meta:
+    db_table = 'emp'
+    managed = False
