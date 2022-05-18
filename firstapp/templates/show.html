@@ -5,6 +5,12 @@
 
 <body>
 
+{% if user.is_authenticated %}
+  <p>{{ user.username }} 님 반갑습니다.</p>
+{% else %}
+  <p>현재 상태 : Guest</p>
+{% endif %}
+
   <h1>show!</h1>
   <hr>
   <ul>
@@ -27,3 +33,4 @@
 {% block content2 %}
   <h1>Content@@@@</h1>
 {% endblock %}
+
